@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Main
+class Main
 {
     public static void pat(char[] s, int[] lps) 
     {
