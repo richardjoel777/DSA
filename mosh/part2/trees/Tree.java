@@ -1,6 +1,7 @@
 package mosh.part2.trees;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tree {
     Node root;
@@ -177,12 +178,100 @@ public class Tree {
     public void leverOrderTraverse()
     {
         int height = height();
-        for(int i=0;i<=height;i++)
-        {
-            for(var item : kthNodes(i))
+        for (int i = 0; i <= height; i++) {
+            for (var item : kthNodes(i))
                 System.out.print(item + " ");
             System.out.println();
         }
+    }
+
+    private int size(Node root)
+    {
+        if (root == null)
+            return 0;
+        else
+            return 1 + size(root.leftChild) + size(root.rightChild);
+    }
+
+    public int size()
+    {
+        return size(root);
+    }
+
+    private int countLeaves(Node node)
+    {
+        if (node == null)
+            return 0;
+        if(isLeaf(node))
+            return 1;
+        return countLeaves(node.leftChild) + countLeaves(node.rightChild);
+    }
+
+    public int countLeaves()
+    {
+        return countLeaves(root);
+    }
+
+    private int max(Node node)
+    {
+        if (node.rightChild == null)
+            return node.value;
+        return max(node.rightChild);
+    }
+    
+    public int max()
+    {
+        return max(root);
+    }
+
+    private boolean contains(Node node, int k)
+    {
+        if (node == null)
+            return false;
+        if(node.value == k)
+            return true;
+        if (isLeaf(node))
+            return false;
+        return (contains(node.leftChild, k) || contains(node.rightChild, k));
+    }
+
+    public boolean contains(int k)
+    {
+        return contains(root, k);
+    }
+
+    private boolean areSibling(Node node, int a, int b)
+    {
+        if (isLeaf(node))
+            return false;
+        if (node.leftChild.value == a && node.rightChild.value == b)
+            return true;
+        return (areSibling(node.leftChild, a, b) || areSibling(node.rightChild, a, b));
+    }
+    
+    public boolean areSibling(int a, int b)
+    {
+        return areSibling(root, a, b);
+    }
+
+    private boolean getAncestors(Node node, int k, List<Integer> list)
+    {
+        if (node == null)
+            return false;
+        if (node.value == k)
+            return true;
+        if (getAncestors(node.leftChild, k, list) || getAncestors(node.rightChild, k, list)) {
+            list.add(node.value);
+            return true;
+        }
+        return false;
+    }
+    
+    public List<Integer> getAncestors(int k)
+    {
+        List<Integer> list = new ArrayList<>();
+        getAncestors(root, k, list);
+        return list;
     }
     
     public static void main(String[] args) {
@@ -195,14 +284,14 @@ public class Tree {
         t.insert(8);
         t.insert(10);
 
-        Tree t1 = new Tree();
-        t1.insert(7);
-        t1.insert(4);
-        t1.insert(9);
-        t1.insert(1);
-        t1.insert(6);
-        t1.insert(8);
-        t1.insert(10);
+        // Tree t1 = new Tree();
+        // t1.insert(7);
+        // t1.insert(4);
+        // t1.insert(9);
+        // t1.insert(1);
+        // t1.insert(6);
+        // t1.insert(8);
+        // t1.insert(10);
         // t.preOrderTraversal();
 
         // t.swap();
@@ -212,6 +301,8 @@ public class Tree {
         // ArrayList<Integer> list = t.kthNodes(2);
         // for(int i : list)
         //     System.out.println(i);
-        t.leverOrderTraverse();
+        // t.leverOrderTraverse();
+
+        System.out.println(t.getAncestors(7));
     }
 }
