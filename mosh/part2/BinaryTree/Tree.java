@@ -1,4 +1,4 @@
-package mosh.part2.trees;
+package mosh.part2.BinaryTree;
 
 import java.util.ArrayList;
 import java.util.List;
