@@ -2,8 +2,6 @@ package part2.heaps;
 
 import java.util.Arrays;
 
-import part2.heaps.Heap;
-
 public class Main {
 
     

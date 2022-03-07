@@ -1,4 +1,4 @@
-package mosh.part2.AVLTree;
+package part2.AVLTree;
 
 class AVL {
     Node root;
